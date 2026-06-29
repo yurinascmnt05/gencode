@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gencode - Gerador Personalizado</title>
+    <meta name="description" content="Gere e Publique QR Codes Personalizados facilmente com Gencode.">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Crie e Publique QR Codes Personalizados</h1>
+        <p>Gere QR Codes personalizados totalmente GRATUITOS e sem prazos de VALIDADE!</p>
+        <div class="hero-actions">
+            <button class="btn-primary-large"
+                onclick="document.getElementById('generator').scrollIntoView({behavior: 'smooth'})">Começar
+                Agora</button>
+        </div>
+    </section>
+
+    <!-- MAIN APP DASHBOARD -->
+    <main class="dashboard-container" id="generator">
+        <!-- Coluna 1: Destino -->
+        <div class="panel col-destination">
+            <h3>Destino</h3>
+            <div class="grid-destination">
+                <button class="dest-btn active" data-prefix="https://">
+                    <i class="fa-solid fa-link"></i>
+                    <span>Website</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://instagram.com/">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>Instagram</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://wa.me/">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://linkedin.com/in/">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://github.com/">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://youtube.com/c/">
+                    <i class="fa-brands fa-youtube"></i>
+                    <span>YouTube</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://facebook.com/">
+                    <i class="fa-brands fa-facebook"></i>
+                    <span>Facebook</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://x.com/">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <span>X (Twitter)</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://tiktok.com/@">
+                    <i class="fa-brands fa-tiktok"></i>
+                    <span>TikTok</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://t.me/">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Telegram</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://open.spotify.com/">
+                    <i class="fa-brands fa-spotify"></i>
+                    <span>Spotify</span>
+                </button>
+                <button class="dest-btn" data-prefix="mailto:">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Email</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://docs.google.com/document/d/">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <span>Google Docs</span>
+                </button>
+                <button class="dest-btn" data-prefix="https://drive.google.com/file/d/">
+                    <i class="fa-solid fa-upload"></i>
+                    <span>Enviar Arquivo</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Coluna 2: Preview -->
+        <div class="panel col-preview">
+            <h3>Insira sua URL</h3>
+            <div class="input-wrapper">
+                <input type="text" id="qr-input" placeholder="Digite a URL..." autocomplete="off"
+                    value="https://exemplo.com.br">
+            </div>
+
+            <div class="live-preview-container">
+                <h4>Visualização ao Vivo</h4>
+                <div id="qrcode-container" class="qrcode-wrapper"></div>
+                <div style="display: flex; gap: 0.5rem; width: 100%; margin-top: 1.5rem;">
+                    <button id="download-png-btn" class="btn-download" style="flex: 1; margin: 0;">Baixar PNG</button>
+                    <button id="download-svg-btn" class="btn-download" style="flex: 1; margin: 0; background-color: var(--text-dark);">Baixar SVG</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna 3: Customização -->
+        <div class="panel col-customize">
+            <!-- Padrões de Pontos -->
+            <div class="custom-group">
+                <h3>Formato</h3>
+                <div class="grid-options" id="pattern-grid">
+                    <button class="option-btn active" data-type="square" title="Quadrados">
+                        <div class="icon-square"></div>
+                    </button>
+                    <button class="option-btn" data-type="dots" title="Bolinhas">
+                        <div class="icon-dots"></div>
+                    </button>
+                    <button class="option-btn" data-type="rounded" title="Arredondado">
+                        <div class="icon-rounded"></div>
+                    </button>
+                    <button class="option-btn" data-type="classy" title="Elegante">
+                        <div class="icon-classy"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cores -->
+            <div class="custom-group">
+                <h3>Cor</h3>
+                <div class="grid-colors" id="color-grid">
+                    <button class="color-btn active" data-color="#000000" style="background-color: #000000;"></button>
+                    <button class="color-btn" data-color="#6b7280" style="background-color: #6b7280;"></button>
+                    <button class="color-btn" data-color="#ef4444" style="background-color: #ef4444;"></button>
+                    <button class="color-btn" data-color="#ec4899" style="background-color: #ec4899;"></button>
+                    <button class="color-btn" data-color="#f472b6" style="background-color: #f472b6;"></button>
+
+                    <button class="color-btn" data-color="#8b5cf6" style="background-color: #8b5cf6;"></button>
+                    <button class="color-btn" data-color="#1d4ed8" style="background-color: #1d4ed8;"></button>
+                    <button class="color-btn" data-color="#3b82f6" style="background-color: #3b82f6;"></button>
+                    <button class="color-btn" data-color="#06b6d4" style="background-color: #06b6d4;"></button>
+                    <button class="color-btn" id="custom-color-btn"
+                        style="background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); display: flex; align-items: center; justify-content: center; color: white;"
+                        title="Cor Personalizada">
+                        <i class="fa-solid fa-plus" style="filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.8));"></i>
+                    </button>
+                    <input type="color" id="hidden-color-input" class="hidden" value="#000000">
+                </div>
+            </div>
+
+            <!-- Logos -->
+            <div class="custom-group">
+                <h3>Logo</h3>
+                <div class="grid-options" id="logo-grid">
+                    <button class="option-btn logo-option active" data-logo="none" title="Sem Logo">
+                        <i class="fa-solid fa-ban"></i>
+                    </button>
+                    <button class="option-btn logo-option" data-logo="scan-me" title="Padrão Scan Me">
+                        <span style="font-size: 0.6rem; font-weight: bold; line-height: 1;">SCAN</span>
+                    </button>
+                    <button class="option-btn logo-option" id="btn-custom-logo" title="Fazer Upload">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <input type="file" id="logo-file" accept="image/*" class="hidden" />
+            </div>
+        </div>
+    </main>
+
+    <!-- Importa biblioteca qr-code-styling via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
