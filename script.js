@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lógica de Geração do vCard
     btnGenerateVcard.addEventListener('click', () => {
-        const nome = document.getElementById('vcard-nome').value || '';
+        const nome = document.getElementById('vcard-nome').value.trim() || '';
         const tel = document.getElementById('vcard-tel').value || '';
         const email = document.getElementById('vcard-email').value || '';
         const empresa = document.getElementById('vcard-empresa').value || '';
@@ -222,20 +222,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const cep = document.getElementById('vcard-cep').value || '';
         const site = document.getElementById('vcard-site').value || '';
 
+        // Função para formatar o telefone e evitar formatações incorretas de outros países
+        const formatPhone = (p) => {
+            let num = p.replace(/[^\d+]/g, ''); // Mantém apenas números e o sinal de +
+            // Se tiver 10 ou 11 dígitos e não começar com +, assumimos Brasil (+55)
+            if (!num.startsWith('+') && (num.length === 10 || num.length === 11)) {
+                num = '+55' + num;
+            }
+            return num;
+        };
+
         // Montagem da string vCard (Versão 3.0)
         let vcardStr = "BEGIN:VCARD\nVERSION:3.0\n";
-        if (nome) vcardStr += `FN:${nome}\n`;
+        
+        // Tratamento do Nome
+        // O iOS requer a propriedade N. O Android às vezes duplica se separarmos Nome e Sobrenome.
+        // A solução mais segura cross-platform é colocar o nome completo no campo de "Nome" (Given Name) da propriedade N.
+        if (nome) {
+            vcardStr += `FN:${nome}\n`;
+            vcardStr += `N:;${nome};;;\n`; 
+        }
+
         if (empresa) vcardStr += `ORG:${empresa}\n`;
         if (cargo) vcardStr += `TITLE:${cargo}\n`;
-        if (tel) vcardStr += `TEL;TYPE=CELL:${tel}\n`;
-        if (telComercial) vcardStr += `TEL;TYPE=WORK,VOICE:${telComercial}\n`;
-        if (fax) vcardStr += `TEL;TYPE=WORK,FAX:${fax}\n`;
-        if (email) vcardStr += `EMAIL;TYPE=WORK,INTERNET:${email}\n`;
+        
+        if (tel) vcardStr += `TEL;TYPE=CELL:${formatPhone(tel)}\n`;
+        if (telComercial) vcardStr += `TEL;TYPE=WORK,VOICE:${formatPhone(telComercial)}\n`;
+        if (fax) vcardStr += `TEL;TYPE=WORK,FAX:${formatPhone(fax)}\n`;
+        
+        // Removido TYPE=WORK para não forçar a label "Trabalho" nos celulares
+        if (email) vcardStr += `EMAIL;TYPE=INTERNET:${email}\n`;
         if (site) vcardStr += `URL:${site}\n`;
         
         // Endereço formatado: PO Box;Ext Adr;Street;Locality;Region;Postal Code;Country
         if (rua || cidade || estado || cep || pais) {
-            vcardStr += `ADR;TYPE=WORK:;;${rua};${cidade};${estado};${cep};${pais}\n`;
+            vcardStr += `ADR:;;${rua};${cidade};${estado};${cep};${pais}\n`;
         }
         
         vcardStr += "END:VCARD";
