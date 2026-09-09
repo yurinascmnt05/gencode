@@ -362,6 +362,79 @@ body {
 
 .hidden { display: none !important; }
 
+/* Estilos do Formulário vCard */
+.vcard-wrapper {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.vcard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem 1rem;
+}
+
+.vcard-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.vcard-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.vcard-field label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg-panel);
+    padding: 0 0.4rem;
+    margin-left: 0.8rem;
+    margin-bottom: -0.5rem;
+    z-index: 1;
+    width: max-content;
+}
+
+.vcard-field input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    background-color: transparent;
+}
+
+.vcard-field input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+}
+
+.vcard-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.vcard-generate-btn {
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    background-color: #e2e8f0;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.vcard-generate-btn:hover {
+    background-color: #cbd5e1;
+    color: var(--text-dark);
+}
+
 /* Responsividade */
 @media (max-width: 1024px) {
     .dashboard-container {

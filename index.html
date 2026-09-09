@@ -41,6 +41,10 @@
                     <i class="fa-solid fa-link"></i>
                     <span>Website</span>
                 </button>
+                <button class="dest-btn" data-type="vcard">
+                    <i class="fa-regular fa-id-badge"></i>
+                    <span>Cartão de Visita</span>
+                </button>
                 <button class="dest-btn" data-prefix="https://instagram.com/">
                     <i class="fa-brands fa-instagram"></i>
                     <span>Instagram</span>
@@ -98,10 +102,70 @@
 
         <!-- Coluna 2: Preview -->
         <div class="panel col-preview">
-            <h3>Insira sua URL</h3>
-            <div class="input-wrapper">
+            <h3 id="panel-title">Insira sua URL</h3>
+            <div class="input-wrapper" id="url-input-container">
                 <input type="text" id="qr-input" placeholder="Digite a URL..." autocomplete="off"
                     value="https://exemplo.com.br">
+            </div>
+
+            <div class="vcard-wrapper hidden" id="vcard-container">
+                <div class="vcard-grid">
+                    <div class="vcard-field full-width">
+                        <label>Nome completo</label>
+                        <input type="text" id="vcard-nome">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Número de telefone</label>
+                        <input type="tel" id="vcard-tel">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Endereço de email</label>
+                        <input type="email" id="vcard-email">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Nome da Empresa</label>
+                        <input type="text" id="vcard-empresa">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Cargo</label>
+                        <input type="text" id="vcard-cargo">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Telefone comercial</label>
+                        <input type="tel" id="vcard-tel-comercial">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Fax</label>
+                        <input type="tel" id="vcard-fax">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Rua</label>
+                        <input type="text" id="vcard-rua">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Cidade</label>
+                        <input type="text" id="vcard-cidade">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Estado</label>
+                        <input type="text" id="vcard-estado">
+                    </div>
+                    <div class="vcard-field">
+                        <label>País</label>
+                        <input type="text" id="vcard-pais">
+                    </div>
+                    <div class="vcard-field">
+                        <label>CEP</label>
+                        <input type="text" id="vcard-cep">
+                    </div>
+                    <div class="vcard-field">
+                        <label>Website</label>
+                        <input type="url" id="vcard-site">
+                    </div>
+                </div>
+                <div class="vcard-actions">
+                    <button id="btn-generate-vcard" class="btn-primary-large vcard-generate-btn">CRIAR QR CODE <i class="fa-solid fa-arrow-right" style="margin-left: 0.5rem; font-size: 0.8rem;"></i></button>
+                </div>
             </div>
 
             <div class="live-preview-container">

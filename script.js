@@ -168,21 +168,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Comportamento dos Botões de Destino da Esquerda
     const destButtons = document.querySelectorAll('.dest-btn');
+    const urlInputContainer = document.getElementById('url-input-container');
+    const vcardContainer = document.getElementById('vcard-container');
+    const panelTitle = document.getElementById('panel-title');
+    const btnGenerateVcard = document.getElementById('btn-generate-vcard');
+    
+    let isVcardMode = false;
+
     destButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             destButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            // Pega o prefixo da URL armazenado no HTML
+            const dataType = btn.dataset.type;
             const prefix = btn.dataset.prefix;
-            if (prefix) {
-                qrInput.value = prefix; // Altera o input visualmente
-                currentText = prefix;   // Atualiza o estado da aplicação
-                updateQRCode();         // Recalcula o QR Code em tempo real
-            }
             
-            // Foca no input para facilitar que o usuário complete a URL
-            qrInput.focus();
+            if (dataType === 'vcard') {
+                isVcardMode = true;
+                urlInputContainer.classList.add('hidden');
+                vcardContainer.classList.remove('hidden');
+                panelTitle.innerText = "Informações do Cartão de Visita";
+            } else {
+                isVcardMode = false;
+                urlInputContainer.classList.remove('hidden');
+                vcardContainer.classList.add('hidden');
+                panelTitle.innerText = "Insira sua URL";
+                
+                if (prefix) {
+                    qrInput.value = prefix; // Altera o input visualmente
+                    currentText = prefix;   // Atualiza o estado da aplicação
+                    updateQRCode();         // Recalcula o QR Code em tempo real
+                }
+                
+                // Foca no input para facilitar que o usuário complete a URL
+                qrInput.focus();
+            }
         });
+    });
+
+    // Lógica de Geração do vCard
+    btnGenerateVcard.addEventListener('click', () => {
+        const nome = document.getElementById('vcard-nome').value || '';
+        const tel = document.getElementById('vcard-tel').value || '';
+        const email = document.getElementById('vcard-email').value || '';
+        const empresa = document.getElementById('vcard-empresa').value || '';
+        const cargo = document.getElementById('vcard-cargo').value || '';
+        const telComercial = document.getElementById('vcard-tel-comercial').value || '';
+        const fax = document.getElementById('vcard-fax').value || '';
+        const rua = document.getElementById('vcard-rua').value || '';
+        const cidade = document.getElementById('vcard-cidade').value || '';
+        const estado = document.getElementById('vcard-estado').value || '';
+        const pais = document.getElementById('vcard-pais').value || '';
+        const cep = document.getElementById('vcard-cep').value || '';
+        const site = document.getElementById('vcard-site').value || '';
+
+        // Montagem da string vCard (Versão 3.0)
+        let vcardStr = "BEGIN:VCARD\nVERSION:3.0\n";
+        if (nome) vcardStr += `FN:${nome}\n`;
+        if (empresa) vcardStr += `ORG:${empresa}\n`;
+        if (cargo) vcardStr += `TITLE:${cargo}\n`;
+        if (tel) vcardStr += `TEL;TYPE=CELL:${tel}\n`;
+        if (telComercial) vcardStr += `TEL;TYPE=WORK,VOICE:${telComercial}\n`;
+        if (fax) vcardStr += `TEL;TYPE=WORK,FAX:${fax}\n`;
+        if (email) vcardStr += `EMAIL;TYPE=WORK,INTERNET:${email}\n`;
+        if (site) vcardStr += `URL:${site}\n`;
+        
+        // Endereço formatado: PO Box;Ext Adr;Street;Locality;Region;Postal Code;Country
+        if (rua || cidade || estado || cep || pais) {
+            vcardStr += `ADR;TYPE=WORK:;;${rua};${cidade};${estado};${cep};${pais}\n`;
+        }
+        
+        vcardStr += "END:VCARD";
+        
+        currentText = vcardStr;
+        updateQRCode();
+        
+        // Feedback visual no botão
+        const btnOriginalText = btnGenerateVcard.innerHTML;
+        btnGenerateVcard.innerHTML = "GERADO COM SUCESSO!";
+        btnGenerateVcard.style.backgroundColor = "var(--primary-blue)";
+        btnGenerateVcard.style.color = "white";
+        
+        setTimeout(() => {
+            btnGenerateVcard.innerHTML = btnOriginalText;
+            btnGenerateVcard.style.backgroundColor = "";
+            btnGenerateVcard.style.color = "";
+        }, 2000);
     });
 });
